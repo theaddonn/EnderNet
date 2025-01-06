@@ -1,4 +1,3 @@
-mod peer;
+mod session;
 mod compression;
-
-pub use peer::Peer;
+mod peer;

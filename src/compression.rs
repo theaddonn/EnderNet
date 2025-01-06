@@ -27,15 +27,6 @@ impl Compression {
         self.method = method;
         self
     }
-    
-    pub fn zstd() -> Self {
-        Compression {
-            level: 5,
-            threshold: 0,
-            method: CompressionMethod::None,
-        }
-    }
-    
 }
 
 pub enum CompressionMethod {
