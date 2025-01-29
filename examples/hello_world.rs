@@ -21,7 +21,7 @@ async fn main() {
     let addr_server = SocketAddr::new(IpAddr::V6(Ipv6Addr::LOCALHOST), 5313);
     let addr_client = SocketAddr::new(IpAddr::V6(Ipv6Addr::LOCALHOST), 5314);
 
-    let server = endernet::Peer::serve(addr_server, endernet::Peer::config()).await;
+    let server = endernet::Session::serve(addr_server, endernet::Peer::config()).await;
     let client = endernet::Peer::connect(addr_server, endernet::Peer::config()).await;
 
     server.send()

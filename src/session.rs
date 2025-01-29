@@ -1,14 +1,11 @@
-use std::borrow::Cow;
-use std::net::{Ipv6Addr, SocketAddr, SocketAddrV6};
-use std::num::{NonZero, NonZeroU32};
-use std::sync::Arc;
-use quinn::{crypto, Endpoint, ServerConfig};
-use quinn::rustls::pki_types::{CertificateDer, PrivatePkcs8KeyDer};
-use rand::random;
-use serde::{Deserialize, Serialize};
-use tokio::sync::RwLock;
 use crate::compression::Compression;
 use crate::peer::Peer;
+use quinn::rustls::pki_types::{CertificateDer, PrivatePkcs8KeyDer};
+use quinn::{Endpoint, ServerConfig};
+use serde::{Deserialize, Serialize};
+use std::net::SocketAddr;
+use std::sync::Arc;
+use tokio::sync::RwLock;
 
 pub struct Session<'de, PingPacket, PongPacket>
 where
@@ -16,12 +13,12 @@ where
 {
     addr: SocketAddr,
     server: Endpoint,
-    peers: Vec<Peer>,
+    peers: Vec<Peer<'de, PingPacket, PongPacket>>,
     session_config: ServerConfig,
     pong_state: Arc<RwLock<PongPacket>>,
 }
 
-impl<'de, PingPacket> Session<'de, PingPacket>
+impl<'de, PingPacket, PongPacket> Session<'de, PingPacket, PongPacket>
 where
     PingPacket: Serialize + Deserialize<'de>
 {
@@ -37,7 +34,7 @@ where
 
         // Bind the QUIC server to a local address
         let endpoint = Endpoint::server(server_config, addr).unwrap();
-        
+
         Self {
             addr,
             server: endpoint,
@@ -46,7 +43,9 @@ where
         }
     }
 
-    
+    pub async fn accept() -> Result<> {
+        todo!()
+    }
 }
 
 pub struct SessionConfig {
