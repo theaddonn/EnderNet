@@ -9,7 +9,8 @@ use tokio::sync::RwLock;
 
 pub struct Session<'de, PingPacket, PongPacket>
 where
-    PingPacket: Deserialize<'de>
+    PingPacket: Deserialize<'de>,
+    PongPacket: Serialize<'de> + Default,
 {
     addr: SocketAddr,
     server: Endpoint,
@@ -40,6 +41,7 @@ where
             server: endpoint,
             peers: vec![],
             session_config: config,
+            pong_state: Arc::new(()),
         }
     }
 

@@ -11,12 +11,12 @@ where
     endpoint: Endpoint
 }
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq)]
 pub struct PeerID(u32);
 
 impl<'de, PingPacket, PongPacket> Peer<'de, PingPacket, PongPacket> where
     PingPacket: Deserialize<'de>  {
-    pub async fn ping() -> Result<(PingPacket, Duration), > {
+    pub async fn ping() -> Result<(PingPacket, Duration)> {
         todo!()
     }
     
